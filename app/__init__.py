@@ -31,19 +31,64 @@ def show_welcome():
 #-----------------------------------------------------------
 # Creature list page - Show all the creatures
 #-----------------------------------------------------------
-@app.get("/creatures")
-def show_all_creatures():
+@app.get("/todotable")
+def show_all_task():
     with connect_db() as db:
         sql = """
-            SELECT id, species, name
-            FROM creatures
+            SELECT id, task
+            FROM todotable
         """
         params = ()
-        creatures = db.execute(sql, params).fetchall()
+        todotable = db.execute(sql, params).fetchall()
 
-        return render_template("pages/creature_list.jinja", creatures=creatures)
+        return render_template("pages/todotable_list.jinja", )
 
 
+
+#-----------------------------------------------------------
+# handle the creature from data
+#-----------------------------------------------------------
+@app.post("/todotable/new")
+def process_todotable_form():
+    priority = request.form.get("priority", "unknown").strip()
+    name = request.form.get("name", "unknown").strip()
+
+#connect to the db
+    with connect_db() as db:
+
+        sql = """
+            INSERT INTO todotable (priority, name)
+            VALUES (?, ?)
+
+        """
+        params = (priority, name)
+
+    #run the query
+        db.execute(sql,params)
+
+        flash(f"todotable {name} added successfully")
+
+    return redirect("/todotable")
+
+
+
+    #-----------------------------------------------------------
+# Creature deletson- delate creature via id
+#-----------------------------------------------------------
+@app.get("/todotable/<int:id>/complete")
+def complete_tasks(id):
+    with connect_db() as db:
+        # delete the creature using its id
+        sql = """
+            COMPLETE FROM todotable
+            WHERE id=?
+        """
+        params = (id,)
+        db.execute(sql, params)
+
+# back to list
+        flash("task done", "success")
+        return redirect("/todotable")
 #-----------------------------------------------------------
 # Help page - Show some help
 #-----------------------------------------------------------

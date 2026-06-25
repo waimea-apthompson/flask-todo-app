@@ -7,20 +7,20 @@
 
 {% block content %}
 
-    <h2>List of Creatures</h2>
+    <h2>todotable</h2>
 
     <section id="creatures">
 
         {% for creature in creatures %}
 
-            <div class="creature">
-                <h3>{{ creature.name }}</h3>
-                <p>Species: <strong>{{ creature.species }}</strong></p>
+            <div class="todotable">
+                <h3>{{ todotable.name }}</h3>
+                <p>Species: <strong>{{ todotable.priority }}</strong></p>
             </div>
 
         {% else %}
 
-            <p>No Creatures!</p>
+            <p>No task!</p>
 
         {% endfor %}
 
