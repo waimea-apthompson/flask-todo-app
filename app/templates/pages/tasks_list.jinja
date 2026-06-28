@@ -9,13 +9,14 @@
 
     <h2>todotable</h2>
 
-    <section id="creatures">
+    <section id="tasks">
 
-        {% for creature in creatures %}
+        {% for task in tasks %}
 
-            <div class="todotable">
-                <h3>{{ todotable.name }}</h3>
-                <p>Species: <strong>{{ todotable.priority }}</strong></p>
+            <div class="tasks">
+                <h3>{{ task.name }}</h3>
+                <p>priority: <strong>{{ task.priority }}</strong></p>
+                 <p>complete: <strong>{{ task.complete }}</strong></p>
             </div>
 
         {% else %}

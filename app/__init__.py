@@ -27,29 +27,27 @@ app = Flask(__name__)
 def show_welcome():
     return render_template("pages/welcome.jinja")
 
-
-#-----------------------------------------------------------
-# Creature list page - Show all the creatures
-#-----------------------------------------------------------
-@app.get("/todotable")
-def show_all_task():
+def show_all_tasks():
     with connect_db() as db:
         sql = """
-            SELECT id, task
-            FROM todotable
+            SELECT name, priority, complete
+            FROM tasks
         """
         params = ()
-        todotable = db.execute(sql, params).fetchall()
+        tasks = db.execute(sql, params).fetchall()
 
-        return render_template("pages/todotable_list.jinja", )
+        return render_template("pages/tasks_list.jinja",tasks = tasks )
+
+
+
 
 
 
 #-----------------------------------------------------------
 # handle the creature from data
 #-----------------------------------------------------------
-@app.post("/todotable/new")
-def process_todotable_form():
+@app.post("/task/new")
+def process_task_form():
     priority = request.form.get("priority", "unknown").strip()
     name = request.form.get("name", "unknown").strip()
 
@@ -57,7 +55,7 @@ def process_todotable_form():
     with connect_db() as db:
 
         sql = """
-            INSERT INTO todotable (priority, name)
+            INSERT INTO task (priority, name)
             VALUES (?, ?)
 
         """
@@ -66,21 +64,21 @@ def process_todotable_form():
     #run the query
         db.execute(sql,params)
 
-        flash(f"todotable {name} added successfully")
+        flash(f"tasks {name} added successfully")
 
-    return redirect("/todotable")
+    return redirect("/tasks")
 
 
 
     #-----------------------------------------------------------
 # Creature deletson- delate creature via id
 #-----------------------------------------------------------
-@app.get("/todotable/<int:id>/complete")
+@app.get("/task/<int:id>/complete")
 def complete_tasks(id):
     with connect_db() as db:
-        # delete the creature using its id
+        
         sql = """
-            COMPLETE FROM todotable
+            COMPLETE FROM tasks
             WHERE id=?
         """
         params = (id,)
@@ -88,7 +86,7 @@ def complete_tasks(id):
 
 # back to list
         flash("task done", "success")
-        return redirect("/todotable")
+        return redirect("/tasks")
 #-----------------------------------------------------------
 # Help page - Show some help
 #-----------------------------------------------------------

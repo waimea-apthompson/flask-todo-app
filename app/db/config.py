@@ -17,10 +17,10 @@
 
 class todotable:
 
-    NAME = "todotable"
+    NAME = "tasks"
 
     SCHEMA = """
-        CREATE TABLE todotable (
+        CREATE TABLE tasks (
             id      INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
             priority   INTEGER NOT NULL DEFAULT 3,
@@ -29,11 +29,11 @@ class todotable:
     """
 
     SEED_DATA = """
-        INSERT INTO todotable (name, priority)
+        INSERT INTO tasks (name, priority, complete)
         VALUES
-            ("Pippa"),
-            ("Barry"),
-            ("Helen")
+            ("Pippa", "1","0"),
+            ("Barry", "1","0"),
+            ("Helen", "1","1")
     """
 
 # Add more table classes here...

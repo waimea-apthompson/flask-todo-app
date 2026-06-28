@@ -1,5 +1,5 @@
 {#=====================================================
-  Welcome page
+  Creature List page
 =====================================================#}
 
 {% extends 'pages/_base.jinja' %}
@@ -7,7 +7,25 @@
 
 {% block content %}
 
-    <h1 class="welcome">go cheak your tasks</h1>
+    <h2>tasks to do</h2>
+
+    <section id="tasks">
+
+        {% for task in tasks %}
+
+            <div class="todotable">
+                <h3>{{ todotable.name }}</h3>
+                <p>priority: <strong>{{ todotable.priority }}</strong></p>
+                 <p>complete: <strong>{{ todotable.complete }}</strong></p>
+            </div>
+
+        {% else %}
+
+            <p>No task!</p>
+
+        {% endfor %}
+
+    </section>
 
 {% endblock %}
 
