@@ -13,7 +13,7 @@
 
 	<title>todotable {% block title %}{% endblock %}</title>
 
-    <link rel="icon" href="/static/images/icon.svg">
+    <link rel="icon" href="/static/images/6109099.png">
 
     <script src="/static/js/utils.js"></script>
 
@@ -26,15 +26,11 @@
 
     <header>
         <a href="/">
-            <img src="/static/images/icon.svg" alt="Creature Icon" class="logo">
+            <img src="/static/images/6109099.png" alt="Creature Icon" class="logo">
         </a>
 
         <h1>todotable</h1>
-
-        <nav>
-            <a href="/">Home</a>
-            <a href="/help">Help</a>
-        </nav>
+        <a href="/tasks/{{ tasks.id}}/complete">☐</a>
     </header>
 
     {# Show flash messages from any previous events #}

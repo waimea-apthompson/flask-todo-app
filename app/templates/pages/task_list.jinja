@@ -1,0 +1,60 @@
+{#=====================================================
+  Creature List page
+=====================================================#}
+
+{% extends 'pages/_base.jinja' %}
+
+
+{% block content %}
+
+    <h2>tasks to do</h2>
+
+    <section id="tasks">
+    
+        {% for task in tasks %}
+
+            <div class="task">
+                <h3>{{ task.name }}</h3>
+                {% if tasks.complete %} 
+                 🗹
+                  {% else %}
+                   ☐ 
+                   {% endif %}
+                <p>name: <strong>{{ task.name }}</strong></p>
+                <p>priority: <strong>{{ task.priority }}</strong></p>
+                 <p>complete: <strong>{{ task.complete }}</strong></p>
+                 
+                   <p><a href="/{{ task.id }}/delete">delete</a></p>
+            </div>
+
+            
+        {% else %}
+
+            <p>No task!</p>
+
+        {% endfor %}
+        
+    </section>
+
+    <form method="post" action="/task/new">
+
+        <label>
+        name
+        <input type="text" name="name" required>
+        
+        </label>
+
+
+        <label>
+        priority
+        <input type="number" min="1" max="5" name="priority" required>
+        
+        </label>
+
+        <button>add task</button>
+
+    </form>
+    
+
+{% endblock %}
+

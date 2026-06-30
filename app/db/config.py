@@ -24,7 +24,7 @@ class todotable:
             id      INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
             priority   INTEGER NOT NULL DEFAULT 3,
-            COMPLETE INTEGER NOT NULL DEFAULT 0
+            complete INTEGER NOT NULL DEFAULT 0
         )
     """
 

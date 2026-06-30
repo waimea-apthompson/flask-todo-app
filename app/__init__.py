@@ -24,19 +24,18 @@ app = Flask(__name__)
 # Welcome page
 #-----------------------------------------------------------
 @app.get("/")
-def show_welcome():
-    return render_template("pages/welcome.jinja")
+
 
 def show_all_tasks():
     with connect_db() as db:
         sql = """
-            SELECT name, priority, complete
+            SELECT name, priority, complete, id
             FROM tasks
         """
         params = ()
         tasks = db.execute(sql, params).fetchall()
 
-        return render_template("pages/tasks_list.jinja",tasks = tasks )
+        return render_template("pages/task_list.jinja",tasks = tasks )
 
 
 
@@ -55,38 +54,38 @@ def process_task_form():
     with connect_db() as db:
 
         sql = """
-            INSERT INTO task (priority, name)
+            INSERT INTO tasks (name, priority)
             VALUES (?, ?)
 
         """
-        params = (priority, name)
+        params = (name, priority)
 
     #run the query
         db.execute(sql,params)
 
-        flash(f"tasks {name} added successfully")
+        flash(f"task {name} added successfully")
 
-    return redirect("/tasks")
+    return redirect("/")
 
 
 
-    #-----------------------------------------------------------
+#-----------------------------------------------------------
 # Creature deletson- delate creature via id
 #-----------------------------------------------------------
-@app.get("/task/<int:id>/complete")
-def complete_tasks(id):
+@app.get("/<int:id>/delete")
+def delete_a_task(id):
     with connect_db() as db:
-        
+        # delete the creature using its id
         sql = """
-            COMPLETE FROM tasks
+            DELETE FROM tasks
             WHERE id=?
         """
         params = (id,)
         db.execute(sql, params)
 
 # back to list
-        flash("task done", "success")
-        return redirect("/tasks")
+        flash("task deleted", "success")
+        return redirect("/")
 #-----------------------------------------------------------
 # Help page - Show some help
 #-----------------------------------------------------------
