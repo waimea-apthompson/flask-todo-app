@@ -15,16 +15,23 @@
 
             <div class="task">
                 <h3>{{ task.name }}</h3>
-                {% if tasks.complete %} 
-                 🗹
-                  {% else %}
-                   ☐ 
-                   {% endif %}
-                <p>name: <strong>{{ task.name }}</strong></p>
+               
+               
                 <p>priority: <strong>{{ task.priority }}</strong></p>
-                 <p>complete: <strong>{{ task.complete }}</strong></p>
                  
-                   <p><a href="/{{ task.id }}/delete">delete</a></p>
+                 
+                <p><a href="/{{ task.id }}/delete">delete</a></p>
+
+                {% if task.complete %}
+                 <a href="/{{ task.id }}/uncomplete">🗹</a>
+                {% else %}
+                <a href="/{{ task.id }}/complete">☐</a>
+                {% endif %}
+
+
+
+                
+
             </div>
 
             

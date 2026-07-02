@@ -31,6 +31,7 @@ def show_all_tasks():
         sql = """
             SELECT name, priority, complete, id
             FROM tasks
+            ORDER BY priority ASC
         """
         params = ()
         tasks = db.execute(sql, params).fetchall()
@@ -85,6 +86,45 @@ def delete_a_task(id):
 
 # back to list
         flash("task deleted", "success")
+        return redirect("/")
+
+
+
+
+#-----------------------------------------------------------
+# Creature deletson- delate creature via id
+#-----------------------------------------------------------
+@app.get("/<int:id>/complete")
+def complete_a_task(id):
+    with connect_db() as db:
+        # delete the creature using its id
+        sql = """
+           UPDATE tasks SET complete = 1
+            WHERE id=?
+        """
+        params = (id,)
+        db.execute(sql, params)
+
+# back to list
+        flash("task done", "success")
+        return redirect("/")
+
+        #-----------------------------------------------------------
+# Creature deletson- delate creature via id
+#-----------------------------------------------------------
+@app.get("/<int:id>/uncomplete")
+def uncomplete_a_task(id):
+    with connect_db() as db:
+        # delete the creature using its id
+        sql = """
+           UPDATE tasks SET complete = 0
+            WHERE id=?
+        """
+        params = (id,)
+        db.execute(sql, params)
+
+# back to list
+        flash("task done", "success")
         return redirect("/")
 #-----------------------------------------------------------
 # Help page - Show some help
